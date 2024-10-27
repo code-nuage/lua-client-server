@@ -1,5 +1,6 @@
 enet = require("enet")
 
+require("config")
 require("src/server")
 
 function love.load()

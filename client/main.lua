@@ -1,3 +1,6 @@
+enet = require("enet")
+
+require("config")
 require("src/game")
 
 function love.load()
