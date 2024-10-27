@@ -3,15 +3,17 @@ Network = {}
 function Network:load()
     HOST = enet.host_create()
     SERVER = HOST:connect(CONFIG.IP .. ":" .. CONFIG.PORT)
+
+    SERVER:send(PLAYER.name .. "," .. PLAYER.x .. "," .. PLAYER.y)
 end
 
 function Network:update()
-    event = HOST:service(CONFIG.RATE)
+    local event = HOST:service(CONFIG.RATE)
     if event then
-        print("Received message from server: " .. event.data)
+        if event.type == "receive" then
+            print("Received message from server: " .. event.data)
+        end
     end
 
-    if love.keyboard.isDown("space") then
-        SERVER:send("Hello World!")
-    end
+    SERVER:send("PLAYERDATA," .. PLAYER.name .. "," .. PLAYER.x .. "," .. PLAYER.y)
 end

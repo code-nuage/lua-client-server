@@ -1,3 +1,5 @@
+require("src/player")
+
 Server = {}
 
 function Server:load()
@@ -10,11 +12,11 @@ function Server:update(dt)
 
     if event then
         if event.type == "receive" then
-            print("Received message: " .. event.data)
+            player_listener(event.data)
         elseif event.type == "connect" then
-            print(event.peer, " connected")
+            print(tostring(event.peer) .. " connected")
         elseif event.type == "disconnect" then
-            print(event.peer, " disconnected")
+            print(tostring(event.peer) .. " disconnected")
         end
     end
 
