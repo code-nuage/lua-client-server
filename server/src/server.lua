@@ -20,5 +20,9 @@ function Server:update(dt)
         end
     end
 
+    for _, player in pairs(PLAYERS) do
+        player:send()
+    end
+
     event = HOST:service()
 end

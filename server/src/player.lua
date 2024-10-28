@@ -12,8 +12,6 @@ function player_listener(data)
         else
             PLAYERS[name]:update(x, y)
         end
-
-        print("Receive PLAYERDATA: ", PLAYERS[name].name, PLAYERS[name].x, PLAYERS[name].y)
     end
 end
 
@@ -28,4 +26,12 @@ end
 function Player:update(x, y)
     self.x = x
     self.y = y
+end
+
+function Player:send()
+    if self.previousx ~= self.x or self.previousy ~= self.y then
+        print("Sending PLAYERDATA: ", self.name, self.x, self.y)
+        HOST:broadcast("PLAYERDATA," .. self.name .. "," .. self.x .. "," .. self.y)
+        self.previousx, self.previousy = self.x, self.y
+    end
 end
