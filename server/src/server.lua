@@ -13,6 +13,7 @@ function Server:update(dt)
     if event then
         if event.type == "receive" then
             player_listener(event.data)
+            print("Received data: ", tostring(event.data))
         elseif event.type == "connect" then
             print(tostring(event.peer) .. " connected")
         elseif event.type == "disconnect" then

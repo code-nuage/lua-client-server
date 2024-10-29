@@ -5,8 +5,6 @@ PLAYERS = {}
 function Network:load()
     HOST = enet.host_create()
     SERVER = HOST:connect(CONFIG.IP .. ":" .. CONFIG.PORT)
-
-    SERVER:send(PLAYER.name .. "," .. PLAYER.x .. "," .. PLAYER.y)
 end
 
 function Network:update()
@@ -17,21 +15,22 @@ function Network:update()
         end
     end
 
-    SERVER:send("PLAYERDATA," .. PLAYER.name .. "," .. PLAYER.x .. "," .. PLAYER.y)
+    SERVER:send("PLAYERDATA," .. PLAYER.name .. "," .. PLAYER.uuid .."," .. PLAYER.x .. "," .. PLAYER.y)
 end
 
 -- MANAGE SERVER'S PLAYERSDATA
 function Network:players_update(data)
-    local type, name, x, y = string.match(data, "(%w+),(%w+),([%d%.]+),([%d%.]+)")
+    local type, name, uuid, x, y = string.match(data, "(%w+),(%w+),(%w+),([%d%.]+),([%d%.]+)")
+    print(uuid)
     if type == "PLAYERDATA" and name and x and y then
 
-        if PLAYERS[name] == nil then
-            PLAYERS[name] = NetworkPlayer:new(name, x, y)
+        if PLAYERS[uuid] == nil then
+            PLAYERS[uuid] = NetworkPlayer:new(name, x, y)
         else
-            PLAYERS[name]:update(x, y)
+            PLAYERS[uuid]:update(x, y)
         end
 
-        print("Receive PLAYERDATA: ", PLAYERS[name].name, PLAYERS[name].x, PLAYERS[name].y)
+        print("Receive PLAYERDATA: ", PLAYERS[uuid].name, PLAYERS[uuid].x, PLAYERS[uuid].y)
     end
 end
 

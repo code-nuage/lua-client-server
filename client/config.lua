@@ -1,5 +1,6 @@
 CONFIG = {
     -- GENERAL CONFIG
+    EPOCH = os.time(),
     FONT = love.graphics.newFont("assets/upheavtt.ttf", 20),
 
     -- SERVER CONFIG
@@ -8,5 +9,5 @@ CONFIG = {
     RATE = 50,
 
     -- PLAYER CONFIG
-    NAME = "Nuage"
+    NAME = "Joueur2"
 }
